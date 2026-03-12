@@ -1,0 +1,27 @@
+name: flavors
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: flavors-postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=flavors
+      - POSTGRES_USER=flavors
+      - POSTGRES_PASSWORD=p4ssw0rd
+    ports:
+      - 5432:5432
+    networks:
+      - flavors-network
+    volumes:
+      - flavors-data:/var/lib/postgresql/data
+
+volumes:
+  flavors-data:
+    driver: local
+    name: flavors-data
+
+networks:
+  flavors-network:
+    driver: bridge
+    name: flavors-network
