@@ -1,7 +1,3 @@
--- =============================================================================
--- ÍNDICES para mejorar rendimiento de consultas frecuentes
--- =============================================================================
-
 -- Búsqueda de ventas por local y fecha
 CREATE INDEX idx_venta_local_fecha      ON venta (local_id, fecha_hora DESC);
 -- Búsqueda de ventas por cliente
