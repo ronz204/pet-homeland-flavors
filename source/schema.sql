@@ -22,7 +22,7 @@ CREATE TYPE tipo_receptor_fe    AS ENUM ('persona_fisica', 'persona_juridica');
 -- -----------------------------------------------------------------------------
 -- Provincia (catálogo costarricense)
 -- -----------------------------------------------------------------------------
-CREATE TABLE provincia (
+CREATE TABLE IF NOT EXISTS provincia (
   id     SMALLINT     GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   nombre VARCHAR(50)  NOT NULL UNIQUE
 );
@@ -30,7 +30,7 @@ CREATE TABLE provincia (
 -- -----------------------------------------------------------------------------
 -- Cantón (catálogo costarricense)
 -- -----------------------------------------------------------------------------
-CREATE TABLE canton (
+CREATE TABLE IF NOT EXISTS canton (
   id           SMALLINT     GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   provincia_id SMALLINT     NOT NULL,
   nombre       VARCHAR(80)  NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE canton (
 -- -----------------------------------------------------------------------------
 -- Distrito (catálogo costarricense)
 -- -----------------------------------------------------------------------------
-CREATE TABLE distrito (
+CREATE TABLE IF NOT EXISTS distrito (
   id        SMALLINT     GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   canton_id SMALLINT     NOT NULL,
   nombre    VARCHAR(80)  NOT NULL,
@@ -58,7 +58,7 @@ CREATE TABLE distrito (
 -- -----------------------------------------------------------------------------
 -- Unidad de medida
 -- -----------------------------------------------------------------------------
-CREATE TABLE unidad_medida (
+CREATE TABLE IF NOT EXISTS unidad_medida (
   id      SMALLINT     GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   nombre  VARCHAR(30)  NOT NULL UNIQUE,  -- ej: kilogramo, litro, unidad
   simbolo VARCHAR(10)  NOT NULL UNIQUE   -- ej: kg, L, u
@@ -67,7 +67,7 @@ CREATE TABLE unidad_medida (
 -- -----------------------------------------------------------------------------
 -- Categoría de plato
 -- -----------------------------------------------------------------------------
-CREATE TABLE categoria_plato (
+CREATE TABLE IF NOT EXISTS categoria_plato (
   id          SMALLINT     GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   nombre      VARCHAR(60)  NOT NULL UNIQUE,
   descripcion TEXT
@@ -76,7 +76,7 @@ CREATE TABLE categoria_plato (
 -- -----------------------------------------------------------------------------
 -- Categoría de ingrediente
 -- -----------------------------------------------------------------------------
-CREATE TABLE categoria_ingrediente (
+CREATE TABLE IF NOT EXISTS categoria_ingrediente (
   id     SMALLINT     GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   nombre VARCHAR(60)  NOT NULL UNIQUE
 );
@@ -84,7 +84,7 @@ CREATE TABLE categoria_ingrediente (
 -- -----------------------------------------------------------------------------
 -- Rol de empleado
 -- -----------------------------------------------------------------------------
-CREATE TABLE rol (
+CREATE TABLE IF NOT EXISTS rol (
   id          SMALLINT     GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   nombre      VARCHAR(50)  NOT NULL UNIQUE,  -- administrador, cajero, cocinero, mesero
   descripcion TEXT
@@ -93,7 +93,7 @@ CREATE TABLE rol (
 -- -----------------------------------------------------------------------------
 -- Método de pago
 -- -----------------------------------------------------------------------------
-CREATE TABLE metodo_pago (
+CREATE TABLE IF NOT EXISTS metodo_pago (
   id     SMALLINT     GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   nombre VARCHAR(40)  NOT NULL UNIQUE  -- efectivo, tarjeta_credito, SINPE, etc.
 );
@@ -102,7 +102,7 @@ CREATE TABLE metodo_pago (
 -- FASE 2 - LOCAL (SUCURSAL)
 -- =============================================================================
 
-CREATE TABLE local (
+CREATE TABLE IF NOT EXISTS local (
   id             INT           GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   nombre         VARCHAR(100)  NOT NULL,
   telefono       VARCHAR(20),
@@ -120,7 +120,7 @@ CREATE TABLE local (
 -- FASE 3 - EMPLEADO
 -- =============================================================================
 
-CREATE TABLE empleado (
+CREATE TABLE IF NOT EXISTS empleado (
   id            INT          GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   cedula        CHAR(9)      NOT NULL UNIQUE,  -- cédula CR: 9 dígitos
   nombre        VARCHAR(80)  NOT NULL,
@@ -136,7 +136,7 @@ CREATE TABLE empleado (
 );
 
 -- Un empleado puede trabajar en un local con un rol específico (historial)
-CREATE TABLE empleado_local (
+CREATE TABLE IF NOT EXISTS empleado_local (
   id           INT      GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   empleado_id  INT      NOT NULL,
   local_id     INT      NOT NULL,
@@ -161,7 +161,7 @@ CREATE TABLE empleado_local (
 -- FASE 4 - CLIENTE
 -- =============================================================================
 
-CREATE TABLE cliente (
+CREATE TABLE IF NOT EXISTS cliente (
   id               INT          GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   identificacion   VARCHAR(20)  NOT NULL UNIQUE,  -- cédula física, jurídica, pasaporte o DIMEX
   tipo_id          VARCHAR(20)  NOT NULL DEFAULT 'cedula_fisica'
@@ -176,7 +176,7 @@ CREATE TABLE cliente (
 );
 
 -- Programa de fidelización: puntos acumulados por cliente
-CREATE TABLE fidelizacion (
+CREATE TABLE IF NOT EXISTS fidelizacion (
   id             INT  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   cliente_id     INT  NOT NULL UNIQUE,
   puntos_totales INT  NOT NULL DEFAULT 0 CHECK (puntos_totales >= 0),
@@ -187,7 +187,7 @@ CREATE TABLE fidelizacion (
 );
 
 -- Historial de movimiento de puntos (auditoría)
-CREATE TABLE fidelizacion_movimiento (
+CREATE TABLE IF NOT EXISTS fidelizacion_movimiento (
   id              BIGINT       GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   fidelizacion_id INT          NOT NULL,
   puntos          INT          NOT NULL,  -- positivo: acumulación; negativo: canje
@@ -204,7 +204,7 @@ CREATE TABLE fidelizacion_movimiento (
 -- FASE 5 - INGREDIENTE & PROVEEDOR
 -- =============================================================================
 
-CREATE TABLE ingrediente (
+CREATE TABLE IF NOT EXISTS ingrediente (
   id                       INT          GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   nombre                   VARCHAR(100) NOT NULL UNIQUE,
   categoria_ingrediente_id SMALLINT     NOT NULL,
@@ -220,7 +220,7 @@ CREATE TABLE ingrediente (
 );
 
 -- Inventario por local (stock actual)
-CREATE TABLE inventario_local (
+CREATE TABLE IF NOT EXISTS inventario_local (
   id                   BIGINT          GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   local_id             INT             NOT NULL,
   ingrediente_id       INT             NOT NULL,
@@ -238,7 +238,7 @@ CREATE TABLE inventario_local (
 );
 
 -- Movimientos de inventario (trazabilidad completa)
-CREATE TABLE movimiento_inventario (
+CREATE TABLE IF NOT EXISTS movimiento_inventario (
   id                  BIGINT                  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   inventario_local_id BIGINT                  NOT NULL,
   tipo_movimiento     tipo_movimiento_inv     NOT NULL,
@@ -257,7 +257,7 @@ CREATE TABLE movimiento_inventario (
 );
 
 -- Proveedor
-CREATE TABLE proveedor (
+CREATE TABLE IF NOT EXISTS proveedor (
   id              INT          GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   razon_social    VARCHAR(150) NOT NULL,
   cedula_juridica VARCHAR(20)  NOT NULL UNIQUE,
@@ -268,7 +268,7 @@ CREATE TABLE proveedor (
 );
 
 -- Ingredientes que puede proveer cada proveedor (con precio de referencia)
-CREATE TABLE proveedor_ingrediente (
+CREATE TABLE IF NOT EXISTS proveedor_ingrediente (
   id                     INT            GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   proveedor_id           INT            NOT NULL,
   ingrediente_id         INT            NOT NULL,
@@ -288,7 +288,7 @@ CREATE TABLE proveedor_ingrediente (
 -- FASE 6 - COMPRA
 -- =============================================================================
 
-CREATE TABLE compra (
+CREATE TABLE IF NOT EXISTS compra (
   id              INT            GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   local_id        INT            NOT NULL,
   proveedor_id    INT            NOT NULL,
@@ -309,7 +309,7 @@ CREATE TABLE compra (
     REFERENCES empleado(id) ON UPDATE CASCADE
 );
 
-CREATE TABLE compra_detalle (
+CREATE TABLE IF NOT EXISTS compra_detalle (
   id              BIGINT         GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   compra_id       INT            NOT NULL,
   ingrediente_id  INT            NOT NULL,
@@ -330,7 +330,7 @@ CREATE TABLE compra_detalle (
 -- FASE 7 - TRASLADO INTERNO ENTRE LOCALES
 -- =============================================================================
 
-CREATE TABLE traslado_interno (
+CREATE TABLE IF NOT EXISTS traslado_interno (
   id              INT              GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   local_origen_id INT              NOT NULL,
   local_destino_id INT             NOT NULL,
@@ -352,7 +352,7 @@ CREATE TABLE traslado_interno (
     REFERENCES empleado(id) ON UPDATE CASCADE
 );
 
-CREATE TABLE traslado_detalle (
+CREATE TABLE IF NOT EXISTS traslado_detalle (
   id             BIGINT         GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   traslado_id    INT            NOT NULL,
   ingrediente_id INT            NOT NULL,
@@ -371,7 +371,7 @@ CREATE TABLE traslado_detalle (
 -- FASE 8 - PLATO & RECETA
 -- =============================================================================
 
-CREATE TABLE plato (
+CREATE TABLE IF NOT EXISTS plato (
   id                 INT            GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   nombre             VARCHAR(120)   NOT NULL UNIQUE,
   descripcion        TEXT,
@@ -388,7 +388,7 @@ CREATE TABLE plato (
 -- Disponibilidad de platos por local (para platos regionales)
 -- Si es_regional=FALSE, el plato está en todos los locales;
 -- esta tabla solo es relevante cuando es_regional=TRUE
-CREATE TABLE plato_local (
+CREATE TABLE IF NOT EXISTS plato_local (
   id         INT     GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   plato_id   INT     NOT NULL,
   local_id   INT     NOT NULL,
@@ -404,7 +404,7 @@ CREATE TABLE plato_local (
 );
 
 -- Versión de receta (para historial de cambios y costo por versión)
-CREATE TABLE receta (
+CREATE TABLE IF NOT EXISTS receta (
   id           INT      GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   plato_id     INT      NOT NULL,
   version      SMALLINT NOT NULL DEFAULT 1,
@@ -422,7 +422,7 @@ CREATE TABLE receta (
 );
 
 -- Ingredientes de cada receta con cantidades exactas
-CREATE TABLE receta_ingrediente (
+CREATE TABLE IF NOT EXISTS receta_ingrediente (
   id               BIGINT         GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   receta_id        INT            NOT NULL,
   ingrediente_id   INT            NOT NULL,
@@ -446,7 +446,7 @@ CREATE TABLE receta_ingrediente (
 -- FASE 9 - MENU DEL DIA
 -- =============================================================================
 
-CREATE TABLE menu_dia (
+CREATE TABLE IF NOT EXISTS menu_dia (
   id       INT     GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   local_id INT     NOT NULL,
   fecha    DATE    NOT NULL,
@@ -458,7 +458,7 @@ CREATE TABLE menu_dia (
     REFERENCES local(id) ON UPDATE CASCADE
 );
 
-CREATE TABLE menu_dia_plato (
+CREATE TABLE IF NOT EXISTS menu_dia_plato (
   id              INT            GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   menu_dia_id     INT            NOT NULL,
   plato_id        INT            NOT NULL,
@@ -477,7 +477,7 @@ CREATE TABLE menu_dia_plato (
 -- FASE 10 - RESERVA
 -- =============================================================================
 
-CREATE TABLE reserva (
+CREATE TABLE IF NOT EXISTS reserva (
   id             INT            GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   local_id       INT            NOT NULL,
   cliente_id     INT            NOT NULL,
@@ -502,7 +502,7 @@ CREATE TABLE reserva (
 -- FASE 11 - VENTA (ORDEN / FACTURA)
 -- =============================================================================
 
-CREATE TABLE venta (
+CREATE TABLE IF NOT EXISTS venta (
   id               BIGINT         GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   local_id         INT            NOT NULL,
   empleado_id      INT            NOT NULL,  -- cajero o mesero que procesó
@@ -532,7 +532,7 @@ CREATE TABLE venta (
     REFERENCES reserva(id) ON UPDATE CASCADE
 );
 
-CREATE TABLE venta_detalle (
+CREATE TABLE IF NOT EXISTS venta_detalle (
   id              BIGINT         GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   venta_id        BIGINT         NOT NULL,
   plato_id        INT            NOT NULL,
@@ -555,7 +555,7 @@ CREATE TABLE venta_detalle (
 );
 
 -- Pagos de una venta (puede ser pago mixto: efectivo + SINPE)
-CREATE TABLE venta_pago (
+CREATE TABLE IF NOT EXISTS venta_pago (
   id             BIGINT         GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   venta_id       BIGINT         NOT NULL,
   metodo_pago_id SMALLINT       NOT NULL,
@@ -573,7 +573,7 @@ CREATE TABLE venta_pago (
 -- FASE 12 - FACTURA ELECTRONICA (HACIENDA - COSTA RICA)
 -- =============================================================================
 
-CREATE TABLE factura_electronica (
+CREATE TABLE IF NOT EXISTS factura_electronica (
   id                 BIGINT              GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   venta_id           BIGINT              NOT NULL UNIQUE,
   tipo_documento     tipo_documento_fe   NOT NULL DEFAULT 'factura_electronica',
