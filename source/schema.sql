@@ -573,3 +573,22 @@ CREATE TABLE IF NOT EXISTS factura_electronica (
   CONSTRAINT fk_fe_venta FOREIGN KEY (venta_id)
     REFERENCES venta(id) ON UPDATE CASCADE
 );
+
+-- =============================================================================
+-- FASE 13 - TABLAS DE AUDITORÍA
+-- =============================================================================
+
+-- -----------------------------------------------------------------------------
+-- Auditoría de cambios de precio de platos
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS auditoria_precio_plato (
+  id               BIGINT         GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  plato_id         INT            NOT NULL,
+  precio_anterior  NUMERIC(10, 2) NOT NULL,
+  precio_nuevo     NUMERIC(10, 2) NOT NULL,
+  usuario_db       VARCHAR(100)   NOT NULL,
+  fecha_cambio     TIMESTAMPTZ    NOT NULL DEFAULT NOW(),
+
+  CONSTRAINT fk_app_plato FOREIGN KEY (plato_id)
+    REFERENCES plato(id) ON UPDATE CASCADE
+);
