@@ -383,16 +383,16 @@ INSERT INTO inventario_local (local_id, ingrediente_id, cantidad_actual, cantida
 -- Compras a proveedores
 -- -----------------------------------------------------------------------------
 INSERT INTO compra (local_id, proveedor_id, empleado_id, fecha_compra, fecha_recepcion, estado, total, observacion) VALUES
-  (1, 2, 1, '2025-03-01 09:00:00-06', '2025-03-01 14:30:00-06', 'recibida', 185000.00, 'Pedido semanal carnes'),
-  (1, 4, 1, '2025-03-02 10:15:00-06', '2025-03-02 15:00:00-06', 'recibida', 78500.00, 'Vegetales frescos'),
-  (1, 5, 1, '2025-03-03 08:30:00-06', '2025-03-03 16:00:00-06', 'recibida', 295000.00, 'Granos mensuales'),
-  (2, 2, 3, '2025-03-01 10:00:00-06', '2025-03-01 15:00:00-06', 'recibida', 165000.00, 'Pedido carnes Escazú'),
-  (2, 3, 3, '2025-03-04 11:00:00-06', '2025-03-04 16:30:00-06', 'recibida', 145000.00, 'Mariscos frescos'),
-  (3, 2, 5, '2025-03-05 09:30:00-06', '2025-03-05 14:00:00-06', 'recibida', 125000.00, 'Pedido Alajuela'),
-  (4, 2, 7, '2025-03-06 10:00:00-06', '2025-03-06 15:30:00-06', 'recibida', 135000.00, 'Pedido Heredia'),
-  (5, 2, 9, '2025-03-07 08:00:00-06', '2025-03-07 13:00:00-06', 'recibida', 115000.00, 'Pedido Liberia'),
-  (1, 6, 1, '2025-03-08 09:00:00-06', '2025-03-08 11:00:00-06', 'recibida', 89000.00, 'Lácteos semanales'),
-  (1, 1, 1, '2025-03-10 10:00:00-06', NULL, 'pendiente', 125000.00, 'Pedido frutas y bebidas');
+  (1, 2, 1, '2026-03-01 09:00:00-06', '2026-03-01 14:30:00-06', 'recibida', 185000.00, 'Pedido semanal carnes'),
+  (1, 4, 1, '2026-03-02 10:15:00-06', '2026-03-02 15:00:00-06', 'recibida', 78500.00, 'Vegetales frescos'),
+  (1, 5, 1, '2026-03-03 08:30:00-06', '2026-03-03 16:00:00-06', 'recibida', 295000.00, 'Granos mensuales'),
+  (2, 2, 3, '2026-03-01 10:00:00-06', '2026-03-01 15:00:00-06', 'recibida', 165000.00, 'Pedido carnes Escazú'),
+  (2, 3, 3, '2026-03-04 11:00:00-06', '2026-03-04 16:30:00-06', 'recibida', 145000.00, 'Mariscos frescos'),
+  (3, 2, 5, '2026-03-05 09:30:00-06', '2026-03-05 14:00:00-06', 'recibida', 125000.00, 'Pedido Alajuela'),
+  (4, 2, 7, '2026-03-06 10:00:00-06', '2026-03-06 15:30:00-06', 'recibida', 135000.00, 'Pedido Heredia'),
+  (5, 2, 9, '2026-03-07 08:00:00-06', '2026-03-07 13:00:00-06', 'recibida', 115000.00, 'Pedido Liberia'),
+  (1, 6, 1, '2026-03-08 09:00:00-06', '2026-03-08 11:00:00-06', 'recibida', 89000.00, 'Lácteos semanales'),
+  (1, 1, 1, '2026-03-10 10:00:00-06', NULL, 'pendiente', 125000.00, 'Pedido frutas y bebidas');
 
 -- -----------------------------------------------------------------------------
 -- Detalle de compras
@@ -425,29 +425,29 @@ INSERT INTO compra_detalle (compra_id, ingrediente_id, cantidad, precio_unitario
 -- -----------------------------------------------------------------------------
 INSERT INTO movimiento_inventario (inventario_local_id, tipo_movimiento, cantidad, fecha, referencia_id, referencia_tipo, empleado_id) VALUES
   -- Entradas por compra 1
-  (1, 'entrada', 15.000, '2025-03-01 14:30:00-06', 1, 'compra', 1),
-  (2, 'entrada', 20.000, '2025-03-01 14:30:00-06', 1, 'compra', 1),
-  (3, 'entrada', 12.000, '2025-03-01 14:30:00-06', 1, 'compra', 1),
+  (1, 'entrada', 15.000, '2026-03-01 14:30:00-06', 1, 'compra', 1),
+  (2, 'entrada', 20.000, '2026-03-01 14:30:00-06', 1, 'compra', 1),
+  (3, 'entrada', 12.000, '2026-03-01 14:30:00-06', 1, 'compra', 1),
   -- Entradas por compra 2
-  (9, 'entrada', 25.000, '2025-03-02 15:00:00-06', 2, 'compra', 1),
-  (10, 'entrada', 18.000, '2025-03-02 15:00:00-06', 2, 'compra', 1),
+  (9, 'entrada', 25.000, '2026-03-02 15:00:00-06', 2, 'compra', 1),
+  (10, 'entrada', 18.000, '2026-03-02 15:00:00-06', 2, 'compra', 1),
   -- Entradas por compra 3
-  (21, 'entrada', 100.000, '2025-03-03 16:00:00-06', 3, 'compra', 1),
-  (22, 'entrada', 80.000, '2025-03-03 16:00:00-06', 3, 'compra', 1),
+  (21, 'entrada', 100.000, '2026-03-03 16:00:00-06', 3, 'compra', 1),
+  (22, 'entrada', 80.000, '2026-03-03 16:00:00-06', 3, 'compra', 1),
   -- Salidas por producción (ejemplo)
-  (1, 'salida', 2.500, '2025-03-08 12:00:00-06', NULL, 'produccion', 11),
-  (2, 'salida', 3.200, '2025-03-08 12:30:00-06', NULL, 'produccion', 11),
-  (9, 'salida', 1.500, '2025-03-08 13:00:00-06', NULL, 'produccion', 11);
+  (1, 'salida', 2.500, '2026-03-08 12:00:00-06', NULL, 'produccion', 11),
+  (2, 'salida', 3.200, '2026-03-08 12:30:00-06', NULL, 'produccion', 11),
+  (9, 'salida', 1.500, '2026-03-08 13:00:00-06', NULL, 'produccion', 11);
 
 -- -----------------------------------------------------------------------------
 -- Traslados internos entre locales
 -- -----------------------------------------------------------------------------
 INSERT INTO traslado_interno (local_origen_id, local_destino_id, empleado_id, fecha_solicitud, fecha_recepcion, estado, observacion) VALUES
-  (1, 3, 1, '2025-03-09 10:00:00-06', '2025-03-10 09:00:00-06', 'recibido', 
+  (1, 3, 1, '2026-03-09 10:00:00-06', '2026-03-10 09:00:00-06', 'recibido', 
    'Traslado de excedente a Alajuela'),
-  (1, 2, 1, '2025-03-11 11:00:00-06', '2025-03-11 16:00:00-06', 'recibido',
+  (1, 2, 1, '2026-03-11 11:00:00-06', '2026-03-11 16:00:00-06', 'recibido',
    'Apoyo inventario Escazú'),
-  (2, 4, 3, '2025-03-12 10:30:00-06', NULL, 'en_transito',
+  (2, 4, 3, '2026-03-12 10:30:00-06', NULL, 'en_transito',
    'Traslado a Heredia');
 
 -- -----------------------------------------------------------------------------
@@ -578,11 +578,11 @@ INSERT INTO receta_ingrediente (receta_id, ingrediente_id, cantidad, unidad_medi
 -- Menú del día
 -- -----------------------------------------------------------------------------
 INSERT INTO menu_dia (local_id, fecha, activo) VALUES
-  (1, '2025-03-14', TRUE), (1, '2025-03-15', TRUE), (1, '2025-03-16', TRUE),
-  (2, '2025-03-14', TRUE), (2, '2025-03-15', TRUE), (2, '2025-03-16', TRUE),
-  (3, '2025-03-14', TRUE), (3, '2025-03-15', TRUE), (3, '2025-03-16', TRUE),
-  (4, '2025-03-14', TRUE), (4, '2025-03-15', TRUE), (4, '2025-03-16', TRUE),
-  (5, '2025-03-14', TRUE), (5, '2025-03-15', TRUE), (5, '2025-03-16', TRUE);
+  (1, '2026-03-14', TRUE), (1, '2026-03-15', TRUE), (1, '2026-03-16', TRUE),
+  (2, '2026-03-14', TRUE), (2, '2026-03-15', TRUE), (2, '2026-03-16', TRUE),
+  (3, '2026-03-14', TRUE), (3, '2026-03-15', TRUE), (3, '2026-03-16', TRUE),
+  (4, '2026-03-14', TRUE), (4, '2026-03-15', TRUE), (4, '2026-03-16', TRUE),
+  (5, '2026-03-14', TRUE), (5, '2026-03-15', TRUE), (5, '2026-03-16', TRUE);
 
 -- -----------------------------------------------------------------------------
 -- Platos del menú del día
@@ -602,33 +602,33 @@ INSERT INTO menu_dia_plato (menu_dia_id, plato_id, precio_especial) VALUES
 -- Reservas
 -- -----------------------------------------------------------------------------
 INSERT INTO reserva (local_id, cliente_id, empleado_id, fecha_reserva, num_personas, estado, descripcion) VALUES
-  (1, 11, 2, '2025-03-20 19:00:00-06', 15, 'confirmada', 'Evento corporativo Grupo TechCR'),
-  (1, 6, 2, '2025-03-18 13:00:00-06', 8, 'confirmada', 'Almuerzo familiar celebración cumpleaños'),
-  (2, 12, 4, '2025-03-22 20:00:00-06', 25, 'confirmada', 'Cena empresarial Corporación Innovar'),
-  (1, 3, 2, '2025-03-17 12:30:00-06', 4, 'confirmada', 'Almuerzo de negocios'),
-  (3, 8, 6, '2025-03-21 18:30:00-06', 6, 'pendiente', 'Cena familiar'),
-  (2, 14, 4, '2025-03-19 12:00:00-06', 10, 'confirmada', 'Almuerzo reunión trabajo'),
-  (4, 15, 8, '2025-03-23 19:30:00-06', 5, 'pendiente', 'Cena amigos');
+  (1, 11, 2, '2026-03-20 19:00:00-06', 15, 'confirmada', 'Evento corporativo Grupo TechCR'),
+  (1, 6, 2, '2026-03-18 13:00:00-06', 8, 'confirmada', 'Almuerzo familiar celebración cumpleaños'),
+  (2, 12, 4, '2026-03-22 20:00:00-06', 25, 'confirmada', 'Cena empresarial Corporación Innovar'),
+  (1, 3, 2, '2026-03-17 12:30:00-06', 4, 'confirmada', 'Almuerzo de negocios'),
+  (3, 8, 6, '2026-03-21 18:30:00-06', 6, 'pendiente', 'Cena familiar'),
+  (2, 14, 4, '2026-03-19 12:00:00-06', 10, 'confirmada', 'Almuerzo reunión trabajo'),
+  (4, 15, 8, '2026-03-23 19:30:00-06', 5, 'pendiente', 'Cena amigos');
 
 -- -----------------------------------------------------------------------------
 -- Ventas
 -- -----------------------------------------------------------------------------
 INSERT INTO venta (local_id, empleado_id, cliente_id, reserva_id, tipo_servicio, fecha_hora, subtotal, descuento, impuesto, total, puntos_ganados, estado, observacion) VALUES
-  (1, 2, 1, NULL, 'salon', '2025-03-14 12:30:00-06', 15000.00, 0, 1950.00, 16950.00, 170, 'pagada', NULL),
-  (1, 2, 2, NULL, 'salon', '2025-03-14 13:15:00-06', 28500.00, 1000.00, 3575.00, 31075.00, 311, 'pagada', 'Descuento cliente frecuente'),
-  (1, 16, 3, NULL, 'salon', '2025-03-14 19:45:00-06', 45200.00, 0, 5876.00, 51076.00, 511, 'pagada', NULL),
-  (2, 4, NULL, NULL, 'para_llevar', '2025-03-14 14:20:00-06', 12800.00, 0, 1664.00, 14464.00, 0, 'pagada', 'Cliente sin registro'),
-  (2, 17, 4, NULL, 'salon', '2025-03-14 20:30:00-06', 32400.00, 0, 4212.00, 36612.00, 366, 'pagada', NULL),
-  (1, 2, 5, NULL, 'salon', '2025-03-15 12:00:00-06', 18900.00, 0, 2457.00, 21357.00, 214, 'pagada', NULL),
-  (1, 16, 6, NULL, 'salon', '2025-03-15 13:45:00-06', 51200.00, 2000.00, 6396.00, 55596.00, 556, 'pagada', 'Canje 200 puntos'),
-  (3, 6, 7, NULL, 'salon', '2025-03-15 12:30:00-06', 24600.00, 0, 3198.00, 27798.00, 278, 'pagada', NULL),
-  (4, 8, 8, NULL, 'salon', '2025-03-15 19:00:00-06', 38700.00, 0, 5031.00, 43731.00, 437, 'pagada', NULL),
-  (1, 2, 9, NULL, 'para_llevar', '2025-03-16 11:30:00-06', 15600.00, 0, 2028.00, 17628.00, 176, 'pagada', NULL),
-  (2, 4, 10, NULL, 'salon', '2025-03-16 12:15:00-06', 29800.00, 0, 3874.00, 33674.00, 337, 'pagada', NULL),
-  (1, 2, NULL, NULL, 'para_llevar', '2025-03-16 13:00:00-06', 22400.00, 0, 2912.00, 25312.00, 0, 'pagada', 'Sin registro cliente'),
-  (3, 6, 13, NULL, 'salon', '2025-03-16 12:45:00-06', 19500.00, 0, 2535.00, 22035.00, 220, 'pagada', NULL),
-  (1, 16, 14, NULL, 'salon', '2025-03-16 19:30:00-06', 42600.00, 0, 5538.00, 48138.00, 481, 'pagada', NULL),
-  (2, 17, 15, NULL, 'salon', '2025-03-16 20:00:00-06', 35900.00, 0, 4667.00, 40567.00, 406, 'abierta', 'Mesa activa');
+  (1, 2, 1, NULL, 'salon', '2026-03-14 12:30:00-06', 15000.00, 0, 1950.00, 16950.00, 170, 'pagada', NULL),
+  (1, 2, 2, NULL, 'salon', '2026-03-14 13:15:00-06', 28500.00, 1000.00, 3575.00, 31075.00, 311, 'pagada', 'Descuento cliente frecuente'),
+  (1, 16, 3, NULL, 'salon', '2026-03-14 19:45:00-06', 45200.00, 0, 5876.00, 51076.00, 511, 'pagada', NULL),
+  (2, 4, NULL, NULL, 'para_llevar', '2026-03-14 14:20:00-06', 12800.00, 0, 1664.00, 14464.00, 0, 'pagada', 'Cliente sin registro'),
+  (2, 17, 4, NULL, 'salon', '2026-03-14 20:30:00-06', 32400.00, 0, 4212.00, 36612.00, 366, 'pagada', NULL),
+  (1, 2, 5, NULL, 'salon', '2026-03-15 12:00:00-06', 18900.00, 0, 2457.00, 21357.00, 214, 'pagada', NULL),
+  (1, 16, 6, NULL, 'salon', '2026-03-15 13:45:00-06', 51200.00, 2000.00, 6396.00, 55596.00, 556, 'pagada', 'Canje 200 puntos'),
+  (3, 6, 7, NULL, 'salon', '2026-03-15 12:30:00-06', 24600.00, 0, 3198.00, 27798.00, 278, 'pagada', NULL),
+  (4, 8, 8, NULL, 'salon', '2026-03-15 19:00:00-06', 38700.00, 0, 5031.00, 43731.00, 437, 'pagada', NULL),
+  (1, 2, 9, NULL, 'para_llevar', '2026-03-16 11:30:00-06', 15600.00, 0, 2028.00, 17628.00, 176, 'pagada', NULL),
+  (2, 4, 10, NULL, 'salon', '2026-03-16 12:15:00-06', 29800.00, 0, 3874.00, 33674.00, 337, 'pagada', NULL),
+  (1, 2, NULL, NULL, 'para_llevar', '2026-03-16 13:00:00-06', 22400.00, 0, 2912.00, 25312.00, 0, 'pagada', 'Sin registro cliente'),
+  (3, 6, 13, NULL, 'salon', '2026-03-16 12:45:00-06', 19500.00, 0, 2535.00, 22035.00, 220, 'pagada', NULL),
+  (1, 16, 14, NULL, 'salon', '2026-03-16 19:30:00-06', 42600.00, 0, 5538.00, 48138.00, 481, 'pagada', NULL),
+  (2, 17, 15, NULL, 'salon', '2026-03-16 20:00:00-06', 35900.00, 0, 4667.00, 40567.00, 406, 'abierta', 'Mesa activa');
 
 -- -----------------------------------------------------------------------------
 -- Detalle de ventas
