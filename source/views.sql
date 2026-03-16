@@ -31,13 +31,15 @@ SELECT
   c.apellido2,
   COUNT(v.id) AS total_visitas,
   COALESCE(SUM(v.total), 0) AS total_gastado,
-  COALESCE(f.puntos_totales, 0) AS puntos_fidelizacion
+  COALESCE(MAX(f.puntos_totales), 0) AS puntos_fidelizacion
 FROM cliente c
 LEFT JOIN venta v ON v.cliente_id = c.id AND v.estado = 'pagada'
 LEFT JOIN fidelizacion f ON f.cliente_id = c.id
 WHERE c.activo = TRUE
-GROUP BY c.id, c.identificacion, c.nombre, c.apellido1, c.apellido2, f.puntos_totales
-ORDER BY total_gastado DESC;
+  AND c.apellido1 IS NOT NULL  -- Excluir clientes jurídicos
+GROUP BY c.id, c.identificacion, c.nombre, c.apellido1, c.apellido2
+HAVING COUNT(v.id) > 0  -- Solo clientes con al menos una venta
+ORDER BY total_gastado DESC, total_visitas DESC;
 
 -- -----------------------------------------------------------------------------
 -- 3. vw_inventario_bajo_minimo
@@ -115,26 +117,36 @@ ORDER BY r.fecha_reserva ASC;
 -- -----------------------------------------------------------------------------
 -- 6. vw_desempeno_empleados
 -- Desempeño de empleados en el mes actual (ventas procesadas y montos)
+-- NOTA: Filtra por ventas del mes actual. Si no hay datos, verificar fechas.
 -- -----------------------------------------------------------------------------
 CREATE OR REPLACE VIEW vw_desempeno_empleados AS
+WITH asignacion_actual AS (
+  SELECT DISTINCT ON (el.empleado_id)
+    el.empleado_id,
+    l.nombre AS local_nombre,
+    r.nombre AS rol
+  FROM empleado_local el
+  INNER JOIN local l ON l.id = el.local_id
+  INNER JOIN rol r ON r.id = el.rol_id
+  WHERE el.activo = TRUE
+  ORDER BY el.empleado_id, el.fecha_inicio DESC
+)
 SELECT 
   e.id AS empleado_id,
   e.nombre || ' ' || e.apellido1 AS empleado_nombre,
-  l.nombre AS local_nombre,
-  r.nombre AS rol,
+  a.local_nombre,
+  a.rol,
   COUNT(v.id) AS ventas_procesadas,
   COALESCE(SUM(v.total), 0) AS total_vendido,
-  COALESCE(AVG(v.total), 0) AS promedio_por_venta
+  ROUND(COALESCE(AVG(v.total), 0), 2) AS promedio_por_venta
 FROM empleado e
-INNER JOIN empleado_local el ON el.empleado_id = e.id AND el.activo = TRUE
-INNER JOIN local l ON l.id = el.local_id
-INNER JOIN rol r ON r.id = el.rol_id
+INNER JOIN asignacion_actual a ON a.empleado_id = e.id
 LEFT JOIN venta v ON v.empleado_id = e.id 
   AND v.estado = 'pagada'
   AND DATE_TRUNC('month', v.fecha_hora) = DATE_TRUNC('month', NOW())
 WHERE e.activo = TRUE
-GROUP BY e.id, e.nombre, e.apellido1, l.nombre, r.nombre
-ORDER BY total_vendido DESC;
+GROUP BY e.id, e.nombre, e.apellido1, a.local_nombre, a.rol
+ORDER BY total_vendido DESC, ventas_procesadas DESC;
 
 -- -----------------------------------------------------------------------------
 -- 7. vw_menu_dia_activo
